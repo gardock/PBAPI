@@ -11,7 +11,8 @@ namespace BusinessLogic.Repositories
 {
     public class ToDoListItemListBasedRepository : IToDoListItemRepository
     {
-        private static List<ToDoListItem> toDoList = new List<ToDoListItem>()
+        //TODO jak oznaczyć listę żeby była jedna dla wszystkich instancji
+        private List<ToDoListItem> toDoList = new List<ToDoListItem>()
         {
             new ToDoListItem() {
                 Id = 1,
@@ -62,7 +63,7 @@ namespace BusinessLogic.Repositories
 
         public async Task AddAsync(ToDoListItem toDoListItem)
         {
-            toDoListItem.Id = toDoList.Max(x => x.Id) + 1;
+            //TODO Musimy ustalić nowe ID 
             toDoList.Add(toDoListItem);
         }
         public async Task<IEnumerable<ToDoListItem>> GetAllAsync()
@@ -71,17 +72,19 @@ namespace BusinessLogic.Repositories
         }
         public async Task<ToDoListItem?> GetOneAsync(int id)
         {
-            return toDoList.SingleOrDefault(x => x.Id == id);
+            //TODO zwracamy element z listy
+            return null;
         }
         public async Task DeleteAsync(int id)
         {
-            var itemToDelete = await GetOneAsync(id);
-            if (itemToDelete is not null)
-                itemToDelete.IsDeleted = true;
+            //TODO pobranie elementu do oznaczenia jako usunięty
+
+            //if (itemToDelete is not null)
+            //    itemToDelete.IsDeleted = true;
         }
         public async Task UpdateAsync(ToDoListItem toDoListItem)
         {
-
+            //wytłumaczyć czemu tu jest pusto
         }
     }
 }

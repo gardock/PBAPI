@@ -11,12 +11,14 @@ namespace PBAPI.Controllers
     {
         private readonly IToDoListService _toDoListService;
 
+        //TODO wstrzykujemy serwis 
         public ToDoListController(IToDoListService toDoListService)
         {
-            this._toDoListService = toDoListService;
+            _toDoListService = toDoListService;
         }
 
-        [HttpGet]
+        //TODO metoda
+        [HttpXXXXXX]
         public async Task<ActionResult<IEnumerable<ToDoListItem>>> GetList()
         {
             return Ok(await _toDoListService.GetAllActiveAsync());
@@ -33,7 +35,8 @@ namespace PBAPI.Controllers
             };
         }
 
-        [HttpPost]
+        //TODO metoda
+        [HttpXXXXXX]
         public async Task<ActionResult> Add([FromBody] ToDoListItemAddEditDto product)
         {
             var result = await _toDoListService.CreateNewToDoListItemAsync(product);
@@ -45,7 +48,7 @@ namespace PBAPI.Controllers
             };
         }
 
-        [HttpPost("change_order")]
+        [HttpXXXXXX("change_order")]
         public async Task<ActionResult> ChangeOrder([FromBody] ToDoListItemChangeOrderDto product)
         {
             var result = await _toDoListService.ChangeToDoListItemOrderAsync(product.Id, product.NewOrder);

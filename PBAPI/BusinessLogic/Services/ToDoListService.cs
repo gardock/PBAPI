@@ -16,32 +16,31 @@ namespace BusinessLogic.Services
     {
         private readonly IToDoListItemRepository _toDoListRepository;
 
-        public ToDoListService(IToDoListItemRepository toDoListRepository)
-        {
-            _toDoListRepository = toDoListRepository;
-        }
+        //TODO wstrzyknijmy repozytorium
 
-        public async Task<List<ToDoListItem>> GetAllActiveAsync()
-        {
-            var allToDoItems = await _toDoListRepository.GetAllAsync();
-            if (allToDoItems is null)
-                return null;
-            return allToDoItems.Where(x => !x.IsDeleted).OrderBy(o => o.Order).ToList();
-        }
         public async Task<List<ToDoListItem>> GetAllAsync()
         {
             var allToDoItems = await _toDoListRepository.GetAllAsync();
             return allToDoItems.OrderBy(o => o.Order).ToList();
         }
+
+        public async Task<List<ToDoListItem>> GetAllActiveAsync()
+        {
+            //TODO pobieranie tylko aktywnych
+        }
+
         public async Task<ToDoListItem?> GetOneAsync(int id)
         {
-            return await _toDoListRepository.GetOneAsync(id);
+            //TODO pobranie jednego elementu
         }
 
         public async Task<bool> CreateNewToDoListItemAsync(ToDoListItemAddEditDto toDoListItemDto)
         {
-            var activeToDoListItems = await GetAllActiveAsync();
-            if (activeToDoListItems.Exists(x => x.Title == toDoListItemDto.Title))
+            //TODO pobranie listy aktywnych
+            var activeToDoListItems; 
+
+            //TODO czy istnieje
+            if (activeToDoListItems.XXXXXX(x => x.Title == toDoListItemDto.Title))
                 return false; //cannot place 2 items with same name
 
             ToDoListItem newToDoListItem = new ToDoListItem();
@@ -52,16 +51,18 @@ namespace BusinessLogic.Services
             newToDoListItem.IsDeleted = false;
 
             byte order = 1;
-            if (activeToDoListItems.Any())
+            //TODO czy istnieje chociaż jakikolwiek wpis na liście
+            if (activeToDoListItems.XXXXXX())
             {
-                order = activeToDoListItems.Max(x => x.Order);
-                if (order > 254)
+                //TODO maksymalny element z listy
+                order = activeToDoListItems.XXXXXX(x => x.Order);
+                if (order > 254) 
                     return false; //Max list size reached
                 order++;
             }
             newToDoListItem.Order = order;
 
-            await _toDoListRepository.AddAsync(newToDoListItem);
+            //TODO czego zabrakło w naszej metodzie ? 
 
             return true;
         }
@@ -72,8 +73,10 @@ namespace BusinessLogic.Services
             if (existingToDoListItem is null)
                 return false;
 
-            var activeToDoListItems = await GetAllActiveAsync();
-            if (activeToDoListItems.Exists(x => x.Title == toDoListItemDto.Title
+            //TODO pobranie listy
+            var activeToDoListItems; 
+            //TODO czy istnieje element o takim samym tytule
+            if (activeToDoListItems.XXXXXX(x => x.Title == toDoListItemDto.Title
                                            && x.Id != id))
                 return false; //cannot place 2 items with same name
 
@@ -88,22 +91,22 @@ namespace BusinessLogic.Services
             var toDoListItem = await _toDoListRepository.GetOneAsync(id);
             if (toDoListItem is null)
                 return true;
-            if (toDoListItem.Status == ToDoListItemStatus.InProgress)
-                return false; //Cannot remove items in progress
+            //TODO zwracały fałsz gdy element jest w statusie "InProgress" - nie można usuwać takich elementów
 
             await _toDoListRepository.DeleteAsync(id);
-            await MoveOtherItems(toDoListItem.Order, await GetMaxOrder(), true);
+
+            //TODO wybierz element od którego do którego cofniemy kolejność
+            await MoveOtherItems(XXXXXX, XXXXXX, true);
 
             return true;
         }
 
         public async Task<bool> ChangeToDoListItemOrderAsync(int id, byte newOrder)
         {
-            var maxOrder = await GetMaxOrder(); // if new order is bigger than maxorder - set new order as max order
-            if (newOrder > maxOrder) newOrder = maxOrder;
-
             var toDoListItem = await _toDoListRepository.GetOneAsync(id);
             if (toDoListItem is null) return false; // there is no item with such id 
+
+            //TODO sprawdzić czy nowa pozycja nie przekraczamaksymalnej pozycji na liście
 
             int oldOrder = toDoListItem.Order;
 
@@ -125,10 +128,8 @@ namespace BusinessLogic.Services
 
         private async Task MoveOtherItems(int startOrder, int endOrder, bool toFront)
         {
-            var itemsWithHigherOrder = (await GetAllActiveAsync())
-                .Where(x => x.Order >= startOrder
-                       && x.Order <= endOrder)
-                .ToList();
+            //TODO get all items within order
+            var itemsWithHigherOrderl;
 
             foreach (var item in itemsWithHigherOrder)
             {

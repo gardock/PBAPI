@@ -13,8 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IToDoListItemRepository, ToDoListItemListBasedRepository>();
-builder.Services.AddScoped<IToDoListService, ToDoListService>();
+//TODO zarejestruj serwis i repozytorium
 
 var app = builder.Build();
 
