@@ -45,6 +45,18 @@ namespace PBAPI.Controllers
             };
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(int id, [FromBody] ToDoListItemAddEditDto product)
+        {
+            var result = await _toDoListService.UpdateAsync(id, product);
+
+            return result switch
+            {
+                true => NoContent(),
+                false => StatusCode(StatusCodes.Status405MethodNotAllowed)
+            };
+        }
+
         [HttpPost("change_order")]
         public async Task<ActionResult> ChangeOrder([FromBody] ToDoListItemChangeOrderDto product)
         {
