@@ -1,6 +1,6 @@
 ﻿using BusinessLogic.Dto.ObjectsDto;
+using BusinessLogic.Enums;
 using BusinessLogic.Services.Interfaces;
-using DB.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PBAPI.Controllers
@@ -10,51 +10,73 @@ namespace PBAPI.Controllers
     public class ToDoListController : Controller
     {
         private readonly IToDoListService _toDoListService;
+        private readonly IToDoListReadService _toDoListReadService;
+        private readonly IToDoListOrderingService _toDoListOrderingService;
 
-        public ToDoListController(IToDoListService toDoListService)
+        public ToDoListController(IToDoListService toDoListService, IToDoListReadService toDoListReadService, IToDoListOrderingService toDoListOrderingService)
         {
-            this._toDoListService = toDoListService;
+            _toDoListService = toDoListService;
+            _toDoListReadService = toDoListReadService;
+            _toDoListOrderingService = toDoListOrderingService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ToDoListItem>>> GetList()
+        public async Task<IActionResult> GetList()
         {
-            return Ok(await _toDoListService.GetAllActiveAsync());
+            var result = await _toDoListReadService.GetAllActiveAsync();
+            if (result.IsSuccess)
+                return Ok(result.Data);
+
+            return HandleServiceErrorResult(result.ServiceResultStatus);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var result = await _toDoListService.DeleteToDoListItemAsync(id);
-            return result switch
-            {
-                true => NoContent(),
-                false => StatusCode(StatusCodes.Status405MethodNotAllowed)
-            };
+            if (result.IsSuccess)
+                return NoContent();
+
+            return HandleServiceErrorResult(result.ServiceResultStatus);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Add([FromBody] ToDoListItemAddEditDto product)
+        public async Task<IActionResult> Add([FromBody] ToDoListItemAddEditDto product)
         {
             var result = await _toDoListService.CreateNewToDoListItemAsync(product);
+            if (result.IsSuccess)
+                return Created();
 
-            return result switch
-            {
-                true => NoContent(),
-                false => StatusCode(StatusCodes.Status405MethodNotAllowed)
-            };
+            return HandleServiceErrorResult(result.ServiceResultStatus);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(int id, [FromBody] ToDoListItemAddEditDto product)
+        {
+            var result = await _toDoListService.UpdateAsync(id, product);
+            if (result.IsSuccess)
+                return NoContent();
+
+            return HandleServiceErrorResult(result.ServiceResultStatus);
         }
 
         [HttpPost("change_order")]
-        public async Task<ActionResult> ChangeOrder([FromBody] ToDoListItemChangeOrderDto product)
+        public async Task<IActionResult> ChangeOrder([FromBody] ToDoListItemChangeOrderDto product)
         {
-            var result = await _toDoListService.ChangeToDoListItemOrderAsync(product.Id, product.NewOrder);
+            var result = await _toDoListOrderingService.ChangeToDoListItemOrderAsync(product.Id, product.NewOrder);
+            if (result.IsSuccess)
+                return NoContent();
 
-            return result switch
-            {
-                true => NoContent(),
-                false => StatusCode(StatusCodes.Status405MethodNotAllowed)
-            };
+            return HandleServiceErrorResult(result.ServiceResultStatus);
         }
+
+        private StatusCodeResult HandleServiceErrorResult(ServiceResultStatus status) 
+            => status switch
+        {
+            ServiceResultStatus.NotFound => NotFound(),
+            ServiceResultStatus.MaxListSizeReached => BadRequest(),
+            ServiceResultStatus.Duplicated or ServiceResultStatus.ItemIsInProgress => Conflict(),
+            _ => StatusCode(StatusCodes.Status500InternalServerError),
+        };
     }
 }
