@@ -15,6 +15,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IToDoListItemRepository, ToDoListItemListBasedRepository>();
 builder.Services.AddScoped<IToDoListService, ToDoListService>();
+builder.Services.AddScoped<IToDoListReadService, ToDoListReadService>();
+builder.Services.AddScoped<IToDoListOrderingService, ToDoListOrderingService>();
 
 var app = builder.Build();
 

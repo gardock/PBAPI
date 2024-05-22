@@ -11,5 +11,15 @@ namespace DB.Entities
         public ToDoListItemStatus Status { get; set; }
         public bool IsDeleted { get; set; }
         public byte Order { get; set; }
+
+        public static ToDoListItem CreateNew(string title, string description)
+            => new()
+            {
+                Title = title,
+                Description = description,
+                CreateDate = DateTime.UtcNow,
+                Status = ToDoListItemStatus.Created,
+                IsDeleted = false
+            };
     }
 }
