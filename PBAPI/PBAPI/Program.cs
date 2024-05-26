@@ -3,6 +3,9 @@ using BusinessLogic.Repositories;
 using BusinessLogic.Repositories.Interfaces;
 using BusinessLogic.Services;
 using BusinessLogic.Services.Interfaces;
+using DB.DBContext;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +16,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IToDoListItemRepository, ToDoListItemListBasedRepository>();
+builder.Services.AddDbContext<ToDoListItemDBContext>(
+    options => options.UseSqlServer(@"Data Source=localhost;Initial Catalog=PBIAPI;User id=test;Password=test;TrustServerCertificate=True;",
+         b => b.MigrationsAssembly("DB")));
+
+//builder.Services.AddScoped<IToDoListItemRepository, ToDoListItemListBasedRepository>();
+builder.Services.AddScoped<IToDoListItemRepository, ToDoListItemRepository>();
 builder.Services.AddScoped<IToDoListService, ToDoListService>();
 builder.Services.AddScoped<IToDoListReadService, ToDoListReadService>();
 builder.Services.AddScoped<IToDoListOrderingService, ToDoListOrderingService>();

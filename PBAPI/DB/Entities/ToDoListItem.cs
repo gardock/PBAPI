@@ -1,12 +1,17 @@
 ﻿using DB.Enums;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace DB.Entities
 {
     public class ToDoListItem
     {
+        [Key]
         public int Id { get; set; }
+        [StringLength(50)]
         public string Title { get; set; }
         public DateTime CreateDate { get; set; }
+        [StringLength(200)]
         public string Description { get; set; }
         public ToDoListItemStatus Status { get; set; }
         public bool IsDeleted { get; set; }
