@@ -20,8 +20,8 @@ builder.Services.AddDbContext<ToDoListItemDBContext>(
     options => options.UseSqlServer(@"Data Source=localhost;Initial Catalog=PBIAPI;User id=test;Password=test;TrustServerCertificate=True;",
          b => b.MigrationsAssembly("DB")));
 
-//builder.Services.AddScoped<IToDoListItemRepository, ToDoListItemListBasedRepository>();
-builder.Services.AddScoped<IToDoListItemRepository, ToDoListItemRepository>();
+builder.Services.AddScoped<IToDoListItemRepository, ToDoListItemListBasedRepository>();
+//builder.Services.AddScoped<IToDoListItemRepository, ToDoListItemRepository>();
 builder.Services.AddScoped<IToDoListService, ToDoListService>();
 builder.Services.AddScoped<IToDoListReadService, ToDoListReadService>();
 builder.Services.AddScoped<IToDoListOrderingService, ToDoListOrderingService>();
