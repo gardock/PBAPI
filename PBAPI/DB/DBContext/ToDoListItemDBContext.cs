@@ -10,10 +10,6 @@ namespace DB.DBContext
 {
     public class ToDoListItemDBContext : DbContext
     {
-        public ToDoListItemDBContext(DbContextOptions options) : base(options)
-        {
-
-        }
         public DbSet<ToDoListItem> toDoListItems { get; set; }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
