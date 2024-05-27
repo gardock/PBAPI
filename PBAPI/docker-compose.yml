@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+    db:
+        image: "webapi-db-pb"
+        build:
+            context: .
+            dockerfile: DockerfileDB
+        container_name: webapi-db-pb
+        restart: always
+        ports:
+            - "59876:1433"
+        volumes:
+            - linuxaspnetcoredata:/var/opt/mssql
+        networks:
+            - linuxaspnetcore
+
+    webapi:
+        build:
+           context: .
+           dockerfile: DockerfileAPI
+        container_name: webapi-pb
+        restart: always
+        ports:
+            - "8123:5001"
+        depends_on:
+            - db
+        networks:
+            - linuxaspnetcore
+
+volumes:
+    linuxaspnetcoredata:
+
+networks:
+    linuxaspnetcore:
+        driver: bridge
+        ipam:
+              driver: default
+              config:
+                - subnet: "172.24.0.0/16"
+                  gateway: "172.24.0.1"

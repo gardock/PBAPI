@@ -17,7 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ToDoListItemDBContext>(
-    options => options.UseSqlServer(@"Data Source=localhost;Initial Catalog=PBIAPI;User id=test;Password=test;TrustServerCertificate=True;",
+    options => options.UseSqlServer(@"Data Source=db;Initial Catalog=PBIAPI;User id=sa;Password=SaP@ssw0rd;TrustServerCertificate=True;",
          b => b.MigrationsAssembly("DB")));
 
 //builder.Services.AddScoped<IToDoListItemRepository, ToDoListItemListBasedRepository>();
@@ -28,16 +28,20 @@ builder.Services.AddScoped<IToDoListOrderingService, ToDoListOrderingService>();
 
 var app = builder.Build();
 
-
+//using (var Scope = app.Services.CreateScope())
+//{
+//    var context = Scope.ServiceProvider.GetRequiredService<ToDoListItemDBContext>();
+//    context.Database.Migrate();
+//}
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+app.UseSwagger();
+app.UseSwaggerUI();
+//}
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
