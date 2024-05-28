@@ -28,11 +28,11 @@ builder.Services.AddScoped<IToDoListOrderingService, ToDoListOrderingService>();
 
 var app = builder.Build();
 
-//using (var Scope = app.Services.CreateScope())
-//{
-//    var context = Scope.ServiceProvider.GetRequiredService<ToDoListItemDBContext>();
-//    context.Database.Migrate();
-//}
+using (var Scope = app.Services.CreateScope())
+{
+    var context = Scope.ServiceProvider.GetRequiredService<ToDoListItemDBContext>();
+    context.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
