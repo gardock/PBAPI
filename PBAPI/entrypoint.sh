@@ -19,4 +19,4 @@ if [ "$1" = '/opt/mssql/bin/sqlservr' ]; then
   fi
 fi
 
-exec "$@"
+exec "$@" 

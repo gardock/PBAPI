@@ -28,6 +28,7 @@ builder.Services.AddScoped<IToDoListOrderingService, ToDoListOrderingService>();
 
 var app = builder.Build();
 
+// execute migration on database
 using (var Scope = app.Services.CreateScope())
 {
     var context = Scope.ServiceProvider.GetRequiredService<ToDoListItemDBContext>();
