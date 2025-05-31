@@ -1,6 +1,13 @@
-@PresentationAPI_HostAddress = http://localhost:5259
+@PresentationAPI_HostAddress = https://localhost:7117
 
-GET {{PresentationAPI_HostAddress}}/weatherforecast/
+GET {{PresentationAPI_HostAddress}}/Presentation/
 Accept: application/json
 
-###
+### Repeat text
+POST {{PresentationAPI_HostAddress}}/Presentation/
+Content-Type: application/json
+
+{
+  "text": "string",
+  "repeatCount": 6
+}

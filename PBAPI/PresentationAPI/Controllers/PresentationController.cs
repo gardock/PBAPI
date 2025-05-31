@@ -10,7 +10,8 @@ namespace PresentationAPI.Controllers
     {
         //private readonly IMultiplyText _multiplyText;
 
-        //public PresentationController(IMultiplyText multiplyText) {
+        //public PresentationController(IMultiplyText multiplyText)
+        //{
         //    _multiplyText = multiplyText;
         //}
 
@@ -18,7 +19,7 @@ namespace PresentationAPI.Controllers
         //[HttpPost("dependency-injection")]
         //public async Task<string> MultipleTextFromBodyUsingClass([FromBody] FromBodyDto requestbody)
         //{
-        //    return await _multiplyText.MultiplyText(requestbody);
+        //    return _multiplyText.MultiplyText(requestbody);
         //}
 
 

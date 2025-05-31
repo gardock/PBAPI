@@ -2,6 +2,6 @@
 {
     public interface IMultiplyText
     {
-        Task<string> MultiplyText(FromBodyDto body);
+        string MultiplyText(FromBodyDto body);
     }
 }

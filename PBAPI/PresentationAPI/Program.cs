@@ -1,3 +1,5 @@
+using PresentationAPI;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -9,7 +11,7 @@ builder.Services.AddSwaggerGen();
 
 
 //builder.Services.AddScoped<IMultiplyText, MultiplyTextWithNewLines>();
-//builder.Services.AddScoped<IMultiplyText, MultiplyTextWithSpaces>();
+builder.Services.AddScoped<IMultiplyText, MultiplyTextWithSpaces>();
 
 var app = builder.Build();
 
@@ -19,8 +21,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
