@@ -8,6 +8,5 @@ namespace BusinessLogic.Repositories.Interfaces
         Task DeleteAsync(int id);
         Task<IEnumerable<ToDoListItem>> GetAllAsync();
         Task<ToDoListItem?> GetOneAsync(int id);
-        Task UpdateAsync(ToDoListItem toDoListItem);
     }
 }

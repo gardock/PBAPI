@@ -1,0 +1,22 @@
+@MinimalPresentationAPI_HostAddress = http://localhost:5073
+
+GET {{MinimalPresentationAPI_HostAddress}}/
+Accept: application/json
+
+###
+GET {{MinimalPresentationAPI_HostAddress}}/hello-world
+Accept: application/json
+
+###
+GET {{MinimalPresentationAPI_HostAddress}}/hello-world-from-query?text=dsadas
+Accept: application/json
+
+###
+POST {{MinimalPresentationAPI_HostAddress}}/
+Content-type: application/json
+
+{
+  "text": "test",
+  "repeatCount": 24
+}
+###

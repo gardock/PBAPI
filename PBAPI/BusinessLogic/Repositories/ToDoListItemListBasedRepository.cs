@@ -82,9 +82,5 @@ namespace BusinessLogic.Repositories
             //if (itemToDelete is not null)
             //    itemToDelete.IsDeleted = true;
         }
-        public async Task UpdateAsync(ToDoListItem toDoListItem)
-        {
-            //wytłumaczyć czemu tu jest pusto
-        }
     }
 }
