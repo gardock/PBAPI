@@ -122,22 +122,22 @@ namespace BusinessLogic.Services
                 return false; // there is no need to change
 
             toDoListItem.Order = newOrder;
-            _toDoListRepository.UpdateAsync(toDoListItem);
+            await _toDoListRepository.UpdateAsync(toDoListItem);
             return true;
         }
 
         private async Task MoveOtherItems(int startOrder, int endOrder, bool toFront)
         {
             //TODO get all items within order
-            var itemsWithHigherOrderl;
+            var itemsToMove;
 
-            foreach (var item in itemsWithHigherOrder)
+            foreach (var item in itemsToMove)
             {
                 if (toFront)
                     item.Order--;
                 else
                     item.Order++;
-                _toDoListRepository.UpdateAsync(item);
+                await _toDoListRepository.UpdateAsync(item);
             }
         }
 
