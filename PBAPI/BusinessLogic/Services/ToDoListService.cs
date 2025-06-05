@@ -112,11 +112,11 @@ namespace BusinessLogic.Services
 
             if (oldOrder < newOrder)
             {
-                await MoveOtherItems(oldOrder + 1, newOrder, true);
+                await MoveOtherItems(oldOrder, newOrder, true);
             }
             else if (oldOrder > newOrder)
             {
-                await MoveOtherItems(newOrder + 1, oldOrder, false);
+                await MoveOtherItems(newOrder, oldOrder, false);
             }
             else
                 return false; // there is no need to change

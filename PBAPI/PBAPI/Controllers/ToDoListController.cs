@@ -10,12 +10,7 @@ namespace PBAPI.Controllers
     public class ToDoListController : Controller
     {
         private readonly IToDoListService _toDoListService;
-
         //TODO wstrzykujemy serwis 
-        public ToDoListController(IToDoListService toDoListService)
-        {
-            _toDoListService = toDoListService;
-        }
 
         //TODO metoda
         [HttpXXXXXX]
