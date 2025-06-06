@@ -62,7 +62,7 @@ namespace BusinessLogic.Repositories
 
         public async Task AddAsync(ToDoListItem toDoListItem)
         {
-            //TODO Musimy ustalić nowe ID 
+            toDoListItem.Id = toDoList.Max(m => m.Id) + 1;
             toDoList.Add(toDoListItem);
         }
         public async Task<List<ToDoListItem>> GetAllAsync()
@@ -71,19 +71,16 @@ namespace BusinessLogic.Repositories
         }
         public async Task<ToDoListItem?> GetOneAsync(int id)
         {
-            //TODO zwracamy element z listy
-            return null;
+            return toDoList.FirstOrDefault(f => f.Id == id);
         }
         public async Task DeleteAsync(int id)
         {
-            //TODO pobranie elementu do oznaczenia jako usunięty
-
-            //if (itemToDelete is not null)
-            //    itemToDelete.IsDeleted = true;
+            var itemToDelete = toDoList.FirstOrDefault(f => f.Id == id);
+            if (itemToDelete is not null)
+                itemToDelete.IsDeleted = true;
         }
         public async Task UpdateAsync(ToDoListItem toDoListItem)
         {
-            //wytłumaczyć czemu tu jest pusto
         }
     }
 }

@@ -10,9 +10,12 @@ namespace BusinessLogic.Dto.ObjectsDto
 {
     public class ToDoListItemAddEditDto
     {
-        //TODO wymagane, maxdługość 50
+        [Required]
+        [StringLength(50)]
         public string Title { get; set; }
-        //TODO wymagane, maxdługość 200
+
+        [Required]
+        [StringLength(200)]
         public string Description { get; set; }
     }
 }

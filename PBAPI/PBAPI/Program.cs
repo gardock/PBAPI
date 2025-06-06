@@ -14,6 +14,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //TODO zarejestruj serwis i repozytorium
+builder.Services.AddSingleton<IToDoListItemRepository, ToDoListItemListBasedRepository>();
+builder.Services.AddScoped<IToDoListService, ToDoListService>();
 
 var app = builder.Build();
 
